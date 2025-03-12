@@ -1,2 +1,4 @@
 # notes
-a repo for recording
+a repo for record
+
+

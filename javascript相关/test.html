@@ -1,0 +1,62 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<p>hello</p> 
+</body>
+</html>
+<script>
+    // // for (var i = 0; i < 10; i++) {
+    // //     (function (i) {
+    // //         setTimeout(() => {
+    // //             console.log(i);
+    // //         }, 0);
+    // //     })(i);
+    // // }
+    // function first () {
+    //     console.log('sync')
+    // }
+    // // Promise.resolve().then(function mirco() {
+    // //     console.log('promise1')
+    // //     Promise.resolve().then(function micro2() {console.log('promise1')})
+    // // })
+
+    // setTimeout(function timer1() {console.log('tiner1')}, 0)
+    // setTimeout(function timer2() {console.log('tiner2')}, 0)
+    // first()
+
+    
+
+    </script> -->
+
+    <html>
+
+<body>
+  <pre id="render"></pre>
+</body>
+<script>
+  const main = document.querySelector('#render');
+  const callback = (i, fn) => () => {
+    main.innerText += fn(i);
+  };
+  // 事实证明无论定义var 或者let 结果无差异
+  let i = 1;
+  // 第一遍循环,外部任务执行script 中的脚本：i从0加到1000，并将1000个任务添加到任务队列中
+  while (i++ < 5) {
+  	// 后续第n次循环分别执行一次对应的回调任务
+    setTimeout(callback(i, (i) => '\n setTimeout> ' + i + ''))
+  }
+//  // 第一遍循环,外部任务执行script 中的脚本：i从1000加到2000，并将1000个任务添加到微任务队列中
+  while (i++ < 10) {
+    Promise.resolve().then(callback(i, (i) => i + ','))
+  }
+  console.log(i)
+  main.innerText += '[start ' + i + ' ]\n'
+</script>
+
+</html>
+
